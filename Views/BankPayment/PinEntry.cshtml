@@ -1,0 +1,90 @@
+﻿@model CreditCardProj.Models.creditcombine
+
+
+@{
+    ViewData["Title"] = "Enter PIN";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Include Google Fonts for stylish fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap">
+    <style>
+        .card {
+            border: 2px solid #e3e3e3;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            border-bottom: 2px solid #0056b3;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+            .btn-custom:hover {
+                background-color: #0056b3;
+                border-color: #004a9f;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Enter Your PIN
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("ProcessDebit", "BankPayment", FormMethod.Post))
+                {
+                    <div class="mb-4">
+                        <p class="lead"><b>Credit Card No.: @Model.CardNo</b></p>
+                        @Html.HiddenFor(x => x.CardNo)
+                    </div>
+                    <div class="mb-4">
+                        <label for="pin" class="form-label">Enter PIN:</label>
+                        <input type="password" id="pin" name="pin" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-custom btn w-20">Submit</button>
+                    <div class="mt-3">
+                        @Html.ValidationSummary()
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+@* @using (Html.BeginForm("ProcessDebit", "BankPayment", FormMethod.Post))
+{
+
+    <p>Credit Card No. : @Model.CardNo</p>
+    <br/>
+    @Html.HiddenFor(x=> x.CardNo);
+    
+        <label for="pin">Enter PIN:</label>
+        <input type="password" id="pin" name="pin" required />
+        <button type="submit">Submit</button>
+    <div style="color: red; margin-top: 10px;">
+        @Html.ValidationSummary()
+        <span> </span>
+    </div>
+       
+    } *@

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<CreditCard>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BillTransactions</title>
+</head>
+<body>
+    <ol>
+        @foreach (var x in Model)
+        {
+            <li>
+                Card No:@x.CardNo
+                <br />
+                CardholderName:@x.CardholderName
+                <br />
+                BankName:@x.BankName
+                <br />
+                CVV:@x.Cvv
+                <br />
+                Expiry Date:@x.ExpiryDate
+                <br />
+                Card Pin:@x.CardPin
+                <br />
+                Avilable Credit Limit:@x.AvilableCreditLimit
+                <hr />
+
+            </li>
+        }
+    </ol>
+    @Html.ActionLink("Enable Athentication", "Enable")
+
+</body>
+
+</html>

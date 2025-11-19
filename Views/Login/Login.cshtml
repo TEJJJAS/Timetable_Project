@@ -1,0 +1,221 @@
+﻿@model CreditCardProj.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: transparent;
+            color: #1e3c72;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+            header h1 {
+                margin: 0;
+                font-weight: 800;
+                font-size: 32px;
+            }
+
+            header p {
+                margin: 0;
+                font-size: 16px;
+                color: #555;
+            }
+
+        nav {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            backdrop-filter: blur(5px);
+        }
+
+            nav a {
+                color: #1e3c72;
+                text-decoration: none;
+                margin: 0 12px;
+                padding: 6px 12px;
+                font-weight: 500;
+                transition: 0.3s;
+            }
+
+                nav a:hover {
+                    background-color: #ffd700;
+                    color: #1e3c72;
+                    border-radius: 6px;
+                }
+
+        .login-container {
+            max-width: 420px;
+            margin: 100px auto;
+            background: rgba(255,255,255,0.85);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+            .login-container:hover {
+                box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            }
+
+        h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 6px;
+                color: #555;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 15px;
+            border: 1px solid #d1dbe6;
+            border-radius: 12px;
+            transition: all 0.3s;
+            background-color: #fefefe;
+        }
+
+            .form-control:focus {
+                border-color: #1e3c72;
+                box-shadow: 0 0 8px rgba(30,60,114,0.2);
+                outline: none;
+            }
+
+        .btn-primary {
+            background-color: #1e3c72;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+            .btn-primary:hover {
+                background-color: #16345c;
+            }
+
+        .text-danger {
+            font-size: 13px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .register-link {
+            color: #1e3c72;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+            .register-link:hover {
+                color: #16345c;
+                text-decoration: underline;
+            }
+
+        footer {
+            background: rgba(255, 255, 255, 0.85);
+            color: #6c7a89;
+            text-align: center;
+            padding: 12px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DailySchedule</h1>
+        <p>Elegant & Professional Scheduling Made Easy</p>
+    </header>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">DailySchedule</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item">
+                        @if (Context.Session.GetString("UserName") != null)
+                        {
+                            <form asp-action="Logout" asp-controller="Login" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-outline-danger">Logout</button>
+                            </form>
+                        }
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="login-container">
+        <h2>Login</h2>
+
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span>@ViewBag.Message</span>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Enter username", required = "required" })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter password", required = "required" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn-primary" />
+            </div>
+        }
+        <div class="text-center mt-3">
+            <p>Don't have an account? <a asp-controller="UserRegistration" asp-action="Registration" class="register-link">Register here</a></p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 DailySchedule. All rights reserved.
+    </footer>
+</body>
+</html>

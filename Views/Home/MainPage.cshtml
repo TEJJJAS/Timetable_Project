@@ -1,0 +1,206 @@
+﻿@* @{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+ *@
+
+@{
+    ViewData["Title"] = "Main page";
+}
+
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:#d0efff;
+            margin: 0;
+            padding: 0;
+            color:Black;
+            
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color:cornflowerblue;
+            color: black;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+        }
+
+            nav a {
+                color:cornflowerblue;
+                text-decoration: none;
+                margin: 0 10px;
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+
+                nav a:hover {
+                    background-color:cornflowerblue;
+                    color: white;
+                }
+
+        .carousel-item img {
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 10px;
+        }
+
+            .feature i {
+                font-size: 2rem;
+                margin-bottom: 10px;
+                color: cornflowerblue;
+            }
+
+        footer {
+            background-color:cornflowerblue;
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <link href="bootstrap\bootstrap-5.3.3-dist\css\bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="bootstrap\bootstrap-5.3.3-dist\js\bootstrap.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Personal Banking</h1>
+        <p></p>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">SBI Bank</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="BilledTransaction" asp-action="EnterCardNo">Card Details</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="BankPayment" asp-action="EnterCardNo">Payment</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="UnbilledTransaction" asp-action="EnterCard">Transaction Details</a>
+                    </li>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Manage Card
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="ManageUsage" asp-action="SetAmtLimit2">Set Credit Limit</a></li>
+                            <li><a class="dropdown-item" asp-controller="PinGenerate" asp-action="GeneratePin">New Pin Generate</a></li>
+                            <li><a class="dropdown-item" asp-controller="_2StepVerify" asp-action="BlockCard2">Card Block</a></li>
+                        </ul>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    @* <p>
+        <b style="font-size:large">
+        Use your Credit Card wisely
+        </b>
+        <br />
+        Credit cards come with legal contracts. Hence, it is important that you are aware of their terms and conditions, when you sign up for them.
+        <br />
+        <b style="font-size:large">
+            Explore features and learn about T&Cs:
+        </b>
+        <br />
+         Please read your credit card application carefully to know about your card’s features and associated Terms and Conditions. The information mentioned in small prints may have big impacts on your fee, charges and usage conditions. While some T&Cs are similar on all cards, there are many others that may be particular to the ones you are applying for, so we recommend that you go through all of them.
+        <br />
+        <b style="font-size:large">
+            Understand liabilities:
+        </b>
+        <br />
+        If your card has multiple users, know about the liabilities shared by secondary users. Also, if you have applied for Add-on cards, understand the added responsibilities that come with them such as who will manage the cards, pay bills and debts, etc.
+       
+    </p> *@
+
+    <div class="container text-center">
+        <div class="row align-items-start">
+            <div>
+                <b style="height:20pt">
+                Allow us to help you
+                </b>
+            </div>
+            <br />
+            <br />
+            <div class="col">
+               <b>Contact Us</b>
+               <br />
+                <p>
+                    SBI Cards and Payment Services Limited
+                    Unit 401 & 402, 04th Floor, Aggarwal Millennium Tower,
+                    E-1,2,3 Netaji Subhash Place,
+                    Wazirpur, New Delhi 110034
+                    CIN:U65999DL1998PTC093849
+                </p>
+            </div>
+            <div class="col">
+                <b>Help</b>
+                <br />
+                <p>
+                    Connect with us. Share your query or feedback with us.
+                </p>
+            </div>
+            <div class="col">
+                <b>Simply SMS</b>
+                <br />
+                <p>
+                    Get instant information. Send an SMS to 5676791 from your registered mobile number.
+                </p>
+            </div>
+        </div>
+    </div>
+   
+
+
+    <footer>
+        &copy; 2024 SBI Bank. All rights reserved.
+    </footer>
+
+
+</body>
+</html>

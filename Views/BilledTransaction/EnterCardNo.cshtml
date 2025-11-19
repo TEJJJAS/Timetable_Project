@@ -1,0 +1,11 @@
+﻿@model int
+
+<h1>Enter Card Number</h1>
+
+<form asp-controller="BilledTransaction" asp-action="BillTransaction" method="post">
+    <div class="form-group">
+        <label for="cardNo">Card Number:</label>
+        <input type="text" class="form-control" id="cardNo" name="CardNo">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

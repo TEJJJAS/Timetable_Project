@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Change PIN";
+}
+
+<h2>Change PIN</h2>
+
+<form asp-action="UpdatePin">
+    <div class="form-group">
+        <label for="newPin">New PIN:</label>
+        <input type="password" class="form-control" id="newPin" name="newPin" required>
+
+    </div>
+    <div class="form-group">
+        <label for="confirmPin">Confirm PIN:</label>
+        <input type="password" class="form-control" id="confirmPin" name="confirmPin" required>
+        <br />
+    </div>
+    <button type="submit" class="btn btn-primary">Update PIN</button>
+</form>

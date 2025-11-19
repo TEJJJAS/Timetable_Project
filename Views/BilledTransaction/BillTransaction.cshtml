@@ -1,0 +1,39 @@
+﻿@model List<BillTransactionModel>
+
+<h1>Bill Transaction Details</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cardholder Name</th>
+            <th>Available Credit Limit</th>
+            <th>Outstanding Amount</th>
+            <th>Bank ID</th>
+            <th>Bank Name</th>
+            <th>Bank Holder Name</th>
+            <th>Bank Account</th>
+            <th>Bank Account Balance</th>
+            <th>IFSC Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CardholderName</td>
+                <td>@item.AvilableCreditLimit</td>
+                <td>@item.OutstandingAmt</td>
+                <td>@item.BankId</td>
+                <td>@item.BankName</td>
+                <td>@item.BankHolderName</td>
+                <td>@item.BankAccount</td>
+                <td>@item.BankActBalance</td>
+                <td>@item.Ifsccode</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-controller="Home" asp-action="MainPage">
+<button>Back</button>
+</form>

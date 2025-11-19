@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CreditCardTransaction>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Read</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Credit Card Details</h2>
+    <table>
+        <tr>
+            <th>Transaction Id</th>
+            <th>Transaction Date</th>
+            <th>Transaction Amount</th>
+            <th>Biller Name</th>
+            <th>Billing Status</th>
+            <th>Reward Points</th>
+            <th>NoOfTransPerDay</th>
+            
+        </tr>
+        @foreach (var card in Model)
+        {
+            <tr>
+                <td>@card.TransactionId</td>
+                <td>@card.TransactionDate</td>
+                <td>@card.TransactionAmt</td>
+                <td>@card.BillerName</td>
+                <td>@card.BillingStatus</td>
+                <td>@card.RewardPoints</td>
+                <td>@card.NoOfTransPerDay</td>
+            </tr>
+        }
+    </table>
+    <button>
+        @Html.ActionLink("Back To List", "Enable")
+    </button>
+
+</body>
+</html>

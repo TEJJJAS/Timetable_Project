@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CreditCardProj.Models.CreditCardTransaction>
+
+@{
+
+}
+
+<body>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: cornflowerblue;
+        }
+
+    </style>
+    <div>
+
+
+        <h1>Transaction Details</h1>
+        <table>
+            <tr>
+                <th>Transaction Id</th>
+                <th>Transaction Date</th>
+                <th>Transaction Amount</th>
+                <th>Biller Name</th>
+                <th>Reward Points</th>
+
+            </tr>
+
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.TransactionId</td>
+
+                    <td>@x.TransactionDate</td>
+
+                    <td>@x.TransactionAmt</td>
+
+                    <td>@x.BillerName</td>
+
+                    <td>@x.RewardPoints </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+    <br />
+
+    <a class="btn btn-primary" role="button" asp-controller="UnbilledTransaction" asp-action="SearchTransaction">
+        Show Unbilled Transaction
+    </a>
+
+</body>

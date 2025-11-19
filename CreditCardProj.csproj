@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\BankPayment\**" />
+    <Compile Remove="Views\BilledTransaction\**" />
+    <Compile Remove="Views\ManageUsage\**" />
+    <Compile Remove="Views\PinGenerate\**" />
+    <Compile Remove="Views\UnbilledTransaction\**" />
+    <Compile Remove="Views\_2StepVerify\**" />
+    <Content Remove="Views\BankPayment\**" />
+    <Content Remove="Views\BilledTransaction\**" />
+    <Content Remove="Views\ManageUsage\**" />
+    <Content Remove="Views\PinGenerate\**" />
+    <Content Remove="Views\UnbilledTransaction\**" />
+    <Content Remove="Views\_2StepVerify\**" />
+    <EmbeddedResource Remove="Views\BankPayment\**" />
+    <EmbeddedResource Remove="Views\BilledTransaction\**" />
+    <EmbeddedResource Remove="Views\ManageUsage\**" />
+    <EmbeddedResource Remove="Views\PinGenerate\**" />
+    <EmbeddedResource Remove="Views\UnbilledTransaction\**" />
+    <EmbeddedResource Remove="Views\_2StepVerify\**" />
+    <None Remove="Views\BankPayment\**" />
+    <None Remove="Views\BilledTransaction\**" />
+    <None Remove="Views\ManageUsage\**" />
+    <None Remove="Views\PinGenerate\**" />
+    <None Remove="Views\UnbilledTransaction\**" />
+    <None Remove="Views\_2StepVerify\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\2StepVerifyController.cs" />
+    <Compile Remove="Controllers\BankPaymentController.cs" />
+    <Compile Remove="Controllers\BilledTransactionController.cs" />
+    <Compile Remove="Controllers\ManageUsageController.cs" />
+    <Compile Remove="Controllers\PinGenerateController.cs" />
+    <Compile Remove="Controllers\UnbilledTransactionController.cs" />
+    <Compile Remove="Models\Bank.cs" />
+    <Compile Remove="Models\BillTransactionModel.cs" />
+    <Compile Remove="Models\CardTransactionModel.cs" />
+    <Compile Remove="Models\CreditCard.cs" />
+    <Compile Remove="Models\CreditCardViewModel.cs" />
+    <Compile Remove="Models\LateFee.cs" />
+    <Compile Remove="Models\MonthlyInvoice.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-preview.5.24306.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-preview.5.24306.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0-preview.5.24306.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0-preview.5.24306.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+  </ItemGroup>
+
+</Project>

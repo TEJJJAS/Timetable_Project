@@ -1,0 +1,14 @@
+﻿@model int
+
+<h1 style="text-align: center;">Enter Card Details</h1>
+
+
+<form asp-action="GetCardDetails" asp-controller="UnbilledTransaction" method="post">
+    <div class="form-group" style="margin-bottom: 10px;">
+        <label for="cardNo" style="font-weight: bold; width: 150px;">Card Number:</label>
+        <input type="text" class="form-control" id="cardNo" name="cardNo" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Procced</button>
+</form>
+

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CreditCard>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Read</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Credit Card Details</h2>
+    <table>
+        <tr>
+            <th>Card No</th>
+            <th>Cardholder Name</th>
+            <th>Bank Name</th>
+            <th>CVV</th>
+            <th>Expiry Date</th>
+            <th>Card Pin</th>
+            <th>Available Credit Limit</th>
+            <th>Authentication</th>
+        </tr>
+        @foreach (var card in Model)
+        {
+            <tr>
+                <td>@card.CardNo</td>
+                <td>@card.CardholderName</td>
+                <td>@card.BankName</td>
+                <td>@card.Cvv</td>
+                <td>@card.ExpiryDate</td>
+                <td>@card.CardPin</td>
+                <td>@card.AvilableCreditLimit</td>
+                <td>
+                    @Html.ActionLink("Enable Authentication", "Enable")
+                </td>
+            </tr>
+        }
+    </table>
+
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿@model List<CreditCard>
+
+@{
+    ViewData["Title"] = "Credit Card Details";
+}
+
+<h2>Credit Card Details</h2>
+
+<p>@TempData["Message"]</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Card No</th>
+            <th>Cardholder Name</th>
+            <th>Bank Name</th>
+            <th>CVV</th>
+            <th>Expiry Date</th>
+            <th>Available Credit Limit</th>
+            <th>Update Limit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var card in Model)
+        {
+            <tr>
+                <td>@card.CardNo</td>
+                <td>@card.CardholderName</td>
+                <td>@card.BankName</td>
+                <td>@card.Cvv</td>
+                <td>@card.ExpiryDate</td>
+                <td>@card.AvilableCreditLimit</td>
+                <td>
+                    <form asp-controller="CreditCard" asp-action="UpdateLimit" method="post">
+                        <input type="hidden" name="cardNo" value="@card.CardNo" />
+                        <input type="number" name="availableCreditLimit" step="0.01" placeholder="New Limit" required />
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,34 @@
+﻿@model CreditCard
+
+<h1 style="text-align: center;">Updated Card Details</h1>
+
+<div style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;  margin: 0 auto;">
+    <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold; width: 150px;">Card Number:</label>
+        <span>@Model.CardNo</span>
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold; width: 150px;">Available Credit Limit:</label>
+        <span>@Model.AvilableCreditLimit</span>
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold; width: 150px;">New Credit Limit:</label>
+        <input type="text" asp-for="AvilableCreditLimit" class="form-control" />
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold; width: 150px;">Cardholder Name:</label>
+        <span>@Model.CardholderName</span>
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold; width: 150px;">Bank Name:</label>
+        <span>@Model.BankName</span>
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold; width: 150px;">Expiry Date:</label>
+        <span>@Model.ExpiryDate</span>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a asp-action="CreditCardDetails" asp-route-id="@Model.CardNo" class="btn btn-primary" style="color: white; background-color: #007bff;  border-radius: 5px;">Update</a>
+</div>

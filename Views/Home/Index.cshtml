@@ -1,0 +1,307 @@
+﻿@{
+    ViewData["Title"] = "Home page";
+}
+
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background: transparent;
+            color: #1e3c72;
+            padding: 30px 0 20px 0;
+            text-align: center;
+        }
+
+            header h1 {
+                margin: 0;
+                font-weight: 900;
+                font-size: 36px;
+            }
+
+            header p {
+                margin: 10px 0 0 0;
+                font-size: 18px;
+                color: #555;
+            }
+
+        nav {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            backdrop-filter: blur(5px);
+        }
+
+            nav a {
+                color: #1e3c72;
+                text-decoration: none;
+                margin: 0 12px;
+                padding: 6px 12px;
+                font-weight: 500;
+                transition: 0.3s;
+            }
+
+                nav a:hover {
+                    background-color: #ffd700;
+                    color: #1e3c72;
+                    border-radius: 6px;
+                }
+
+        .carousel-inner img {
+            max-width: 800px;
+            max-height: 500px;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .about-section, .info-section, .why-choose, .get-started, .how-to {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e3c72;
+            font-weight: 700;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.85);
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+            .card:hover {
+                box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            }
+
+        .card-title {
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .card-text {
+            color: #555;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.9);
+            padding: 25px;
+            border-radius: 16px;
+            width: 280px;
+            margin: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .feature-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            }
+
+            .feature-card h4 {
+                color: #1e3c72;
+                font-weight: 700;
+                margin-bottom: 15px;
+            }
+
+            .feature-card p {
+                color: #555;
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+        .how-to {
+            background: rgba(255,255,255,0.9);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+            .how-to ol {
+                text-align: left;
+                color: #444;
+                line-height: 1.8;
+            }
+
+        .get-started a {
+            display: inline-block;
+            background-color: #ff4500;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+            .get-started a:hover {
+                background-color: #e03e00;
+            }
+
+        footer {
+            background: rgba(255, 255, 255, 0.85);
+            color: #6c7a89;
+            text-align: center;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+            backdrop-filter: blur(5px);
+            font-size: 14px;
+            margin-top: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DailySchedule</h1>
+        <p>Premium Scheduling, Simplified</p>
+    </header>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">DailySchedule</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="UserRegistration" asp-action="Registration">Registration</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Login" asp-action="Login">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Scrolling Info -->
+    <div class="scrolling-info" style="background: #fff8c4; padding: 5px 0; overflow: hidden;">
+        <marquee behavior="scroll" direction="left" scrollamount="8">
+            🎯 Welcome to DailySchedule! Plan your day efficiently & boost your productivity. | New Features Released Weekly!
+        </marquee>
+    </div>
+
+
+
+   @*  <!-- Carousel -->
+    <div class="carousel-section text-center" style="padding: 40px 0; background: rgba(255,255,255,0.1);">
+        <div id="carouselExample" class="carousel slide mx-auto" data-bs-ride="carousel" style="max-width: 850px;">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="CreditImage/admission.png" class="d-block w-100 rounded" alt="Admission">
+                </div>
+                <div class="carousel-item">
+                    <img src="CreditImage/admission11.png" class="d-block w-100 rounded" alt="Lectures">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div> *@
+
+
+    <!-- About Section -->
+    <div class="about-section">
+        <h2>About DailySchedule</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 p-4 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Our Platform</h5>
+                        <p class="card-text">
+                            DailySchedule helps you plan, organize, and manage your tasks seamlessly with a modern, easy-to-use interface.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 p-4 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Features</h5>
+                        <p class="card-text">
+                            Daily task scheduling, weekly & monthly planning, reminders, and more to boost your productivity.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 p-4 text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Achievements</h5>
+                        <p class="card-text">
+                            Trusted by thousands of users worldwide for efficient time management and task tracking.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="info-section">
+        <h2>Key Features</h2>
+        <div class="d-flex flex-wrap justify-content-center">
+            <div class="feature-card">
+                <h4>Intuitive Interface</h4>
+                <p>Plan your tasks quickly with a clean, user-friendly layout that makes scheduling a breeze.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Customizable Timetables</h4>
+                <p>Create timetables for any week, add custom slots with colors, descriptions, and easily update them.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Access Anywhere</h4>
+                <p>Manage your schedule seamlessly from your desktop, tablet, or mobile device, anytime, anywhere.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Export & Share</h4>
+                <p>Download your timetable as PDF or image and share it with friends, colleagues, or classmates.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Get Started -->
+    <div class="get-started text-center">
+        <h2>Get Started Today</h2>
+        <p>Sign up for free and start managing your schedule like a pro.</p>
+        <a href="/UserRegistration/Registration">Create Account</a>
+    </div>
+
+    <div class="mt-5 text-center">
+        <p>
+            <strong>Contact:</strong> support@dailyschedule.com | +91 1234 567 890<br>
+            <strong>Website:</strong> <a href="https://www.dailyschedule.com" target="_blank">www.dailyschedule.com</a>
+        </p>
+    </div>
+
+    <footer>
+        &copy; 2025 DailySchedule. All rights reserved.
+    </footer>
+</body>
+</html>

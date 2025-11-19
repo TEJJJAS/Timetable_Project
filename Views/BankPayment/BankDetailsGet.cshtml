@@ -1,0 +1,76 @@
+﻿@model CreditCardProj.Models.creditcombine
+
+
+@{
+    ViewData["Title"] = "Bank Details";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .card {
+            border: 2px solid #e3e3e3;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            border-bottom: 2px solid #0056b3;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+            .btn-custom:hover {
+                background-color: #0056b3;
+                border-color: #004a9f;
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Bank Details</h2>
+            </div>
+            <div class="card-body">
+                <p class="text-center">Welcome, @Model.AccountHolderName</p>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item"><strong>Credit Card Number:</strong> @Model.CardNo</li>
+                    <li class="list-group-item"><strong>Outstanding Amount:</strong> @Model.OutstandingAmt</li>
+                    <li class="list-group-item"><strong>Due Date:</strong> @Model.DueDate.Value.ToString("dd-MM-yyyy")</li>
+                </ul>
+                <form asp-controller="BankPayment" asp-action="BankDetails" method="post">
+                    <input type="hidden" asp-for="CardNo" />
+                    <button type="submit" class="btn btn-custom btn w-20">Pay Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@* <h2>Bank Details</h2>
+
+<div>
+    <p>Welcome @Model.AccountHolderName</p>
+    <br />
+    <p>Credit Card Number: @Model.CardNo</p>
+    <p>Outstanding Amount: @Model.OutstandingAmt</p>
+    <p>Due Date: @Model.DueDate.Value.ToString("dd-MM-yyyy")</p>
+
+</div>
+<form asp-controller="BankPayment" asp-action="BankDetails" method="post">
+    <input type="hidden" asp-for="CardNo" />
+    <button type="submit">Pay Now</button>
+</form> *@

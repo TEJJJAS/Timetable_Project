@@ -1,0 +1,16 @@
+﻿@model CreditCardProj.Models.CreditCardTransaction;
+
+<form asp-page-handler="SearchTransaction" method="post">
+    <label for="cardNumber">Enter Month:</label>
+    <input type="text" id="Month" name="Month" asp-for="TransactionDate" required />
+    <br />
+    <br />
+    @* <label for="cardNumber">Enter Year:</label>
+    <input type="text" id="Year" name="Year" asp-for="Year" required />
+    <br /> *@
+    <br />
+    <button type="submit" class="btn btn-primary">Proceed</button>
+
+    <!-- <button "btn btn-primary" type="submit">Search</button> -->
+</form>
+

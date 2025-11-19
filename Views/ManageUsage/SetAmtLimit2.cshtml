@@ -1,0 +1,16 @@
+﻿@model CreditCardProj.Models.CreditCardViewModel
+
+<h1 style="text-align: center;">Enter Card Details</h1>
+
+<form asp-controller="ManageUsage" asp-action="SetAmtLimit2" method="post">
+    <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold; width: 150px;">Card Number:</label>
+        <input type="text" asp-for="CardNo" class="form-control"  required/>
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold; width: 150px;">New Credit Limit:</label>
+        <input type="text" asp-for="AvilableCreditLimit" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>

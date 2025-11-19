@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CreditCardProj.Models.CreditCardTransaction>
+
+@{
+
+}
+
+<body>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: cornflowerblue;
+        }
+    </style>
+    <div>
+
+
+        <h1>All Unbilled Transaction</h1>
+        <table>
+            <tr>
+                <th>Transaction Id</th>
+                <th>Transaction Date</th>
+                <th>Transaction Amount</th>
+                <th>Biller Name</th>
+                <th>Billing Status</th>
+                <th>Reward Points</th>
+                @* <th>Month</th>
+                <th>Year</th> *@
+
+            </tr>
+
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.TransactionId</td>
+
+                    <td>@x.TransactionDate</td>
+
+                    <td>@x.TransactionAmt</td>
+
+                    <td>@x.BillerName</td>
+                    <td>@x.BillingStatus</td>
+                    <td>@x.RewardPoints </td>
+                   @*  <td>@x.Month</td>
+                    <td>@x.Year</td> *@
+
+                </tr>
+            }
+
+        </table>
+        <br />
+        <h4>Total Amount of Unbilled Transaction: @ViewBag.TotalAmount</h4>
+
+</body>
+<div style="text-align: center; margin-top: 20px;">
+    <a asp-controller="Home" asp-action="MainPage" class="btn btn-primary">Back to Dashboard</a>
+</div>

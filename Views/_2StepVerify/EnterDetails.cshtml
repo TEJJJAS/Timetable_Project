@@ -1,0 +1,23 @@
+﻿@model CreditCardProj.Models.User
+
+<form asp-action="BlockCard1" method="post">
+   @*  <div class="form-group">
+        <label for="CardNo">Card Number:</label>
+        <input type="text" class="form-control" id="CardNo" name="CardNo" value="@Model.CardNo" required>
+        <!-- Use asp-for to bind to model properties -->
+        <!-- Example: <input asp-for="CardNo" class="form-control" required /> -->
+    </div> *@
+    <div class="form-group">
+        <label for="UserName">Username:</label>
+        <input type="text" class="form-control" id="UserName" name="UserName" value="@Model.UserName" required>
+        <!-- Example: <input asp-for="UserName" class="form-control" required /> -->
+    </div>
+    <div class="form-group">
+        <label for="Password">Password:</label>
+        <input type="password" class="form-control" id="Password" name="Password" required>
+        <!-- Example: <input asp-for="Password" class="form-control" required /> -->
+    </div>
+    <button type="submit" class="btn btn-primary">Block Card</button>
+</form>
+
+

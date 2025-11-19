@@ -1,0 +1,130 @@
+﻿@model List<CreditCardProj.Models.Timetable>
+
+@{
+    ViewData["Title"] = "Timetable";
+}
+
+<html>
+<head>
+    <link href="~/bootstrap/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/bootstrap/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #4b0082;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 2px solid #4b0082;
+        }
+
+            nav a {
+                color: #4b0082;
+                text-decoration: none;
+                margin: 0 10px;
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+
+                nav a:hover {
+                    background-color: #4b0082;
+                    color: white;
+                }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .btn-primary {
+            background-color: #ff4500;
+            border: none;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background-color: #e03e00;
+            }
+
+        footer {
+            background-color: #4b0082;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        table th, table td {
+            vertical-align: middle !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>D Y PATIL UNIVERSITY</h1>
+        <p>PUNE</p>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">D Y PATIL COLLEGE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="UserRegistration" asp-action="Registration">Registration</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Login" asp-action="Login">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4" style="color:#4b0082;">Timetable for @ViewBag.Division</h2>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Day</th>
+                    <th>Subject</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Day</td>
+                        <td>@item.Subject</td>
+                        <td>@item.Time</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <a href="@Url.Action("CollegeDetails", "CollegeDetails")" class="btn btn-primary">Back to Divisions</a>
+    </div>
+
+    <footer>
+        &copy; 2025 D Y PATIL. All rights reserved.
+    </footer>
+</body>
+</html>

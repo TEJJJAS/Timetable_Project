@@ -1,0 +1,589 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    var days = new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Timetable - Flexible Times</title>
+    <link href="~/bootstrap/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/bootstrap/bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f7f8fa;
+        }
+
+        header {
+            text-align: center;
+            padding: 18px 0;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg,#dceefb,#e8f5e9);
+        }
+
+        .panel {
+            background: #fff;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 14px;
+        }
+
+        .timetable-grid {
+            display: grid;
+            gap: 6px;
+        }
+
+        .cell, .timeCell, .headerCell {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            min-height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6px;
+            box-sizing: border-box;
+            background: #fff;
+            flex-direction: column;
+        }
+
+        .headerCell {
+            background: #1e3c72;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .timeCell {
+            background: #eef2ff;
+            font-weight: 600;
+        }
+
+        .recessCell {
+            background: #ffe0b2 !important;
+            font-weight: 700;
+        }
+
+        .practical-slot {
+            border: 2px dashed #673ab7;
+            background-color: #ede7f6 !important;
+        }
+
+
+        .cell strong {
+            display: block;
+            font-size: 15px;
+            color: #233a71;
+            line-height: 1.1;
+        }
+
+        .cell span {
+            display: block;
+            font-size: 13px;
+            color: #222;
+            line-height: 1.1;
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .time-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+            .time-row input[type="text"] {
+                width: 200px;
+            }
+
+        .small {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .btn-action {
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">DailySchedule</a>
+
+            <!-- Right side menu button -->
+            <button class="btn btn-primary btn-sm ms-auto"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#rightMenu">
+                ☰ Menu
+            </button>
+        </div>
+    </nav>
+
+    <!-- OFFCANVAS RIGHT MENU -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="rightMenu">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="offcanvas-body">
+
+            <a class="btn btn-outline-primary w-100 mb-2"
+               asp-controller="LoginHome"
+               asp-action="LoginHome">
+                Home
+            </a>
+
+            <a class="btn btn-outline-primary w-100 mb-2"
+               asp-controller="Login"
+               asp-action="Attendance">
+                Attendance
+            </a>
+
+            <form asp-controller="LoginHome" asp-action="Logout" method="post">
+                <button class="btn btn-outline-danger w-100">
+                    Logout (@ViewBag.UserName)
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+
+   @*  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">DailySchedule</a>
+
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary btn-sm"
+                           asp-controller="Login"
+                           asp-action="Attendance">
+                            Attendance
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form asp-action="Logout" asp-controller="LoginHome" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                Logout (@ViewBag.UserName)
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav> *@
+
+    <header>
+        <h2>Flexible Timetable Generator</h2>
+        <p class="small">Add / edit time slots, mark Recess, add lectures & practicals, then generate and export.</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Time Setup -->
+        <div class="panel">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">🕐 Time Slots (Add / Edit / Mark Recess)</h5>
+                <div class="small">Use <strong>Apply Grid</strong> after changes</div>
+            </div>
+
+            <div id="timeList"></div>
+
+            <div class="mt-2 controls">
+                <button class="btn btn-secondary btn-action" id="addTimeBtn">➕ Add Time Slot</button>
+                <button class="btn btn-primary btn-action" id="applyGridBtn">Apply Grid</button>
+                <button class="btn btn-outline-danger btn-action" id="resetTimesBtn">Reset to Default</button>
+            </div>
+            <div class="small mt-2">Tip: mark a slot as <em>Recess</em> to make it a break across all days.</div>
+        </div>
+
+        <!-- Lecture & Practical Setup -->
+        <div class="panel">
+            <!-- 🎓 Lecture Setup -->
+            <h5>🎓 Lecture Setup</h5>
+            <div id="teacherRows">
+                <div class="row teacher-row mb-2">
+                    <div class="col-sm-5">
+                        <input class="form-control teacherName" placeholder="Teacher (e.g., Smith)">
+                    </div>
+                    <div class="col-sm-5">
+                        <input class="form-control subject" placeholder="Subject (e.g., Maths)">
+                    </div>
+                    <div class="col-sm-2">
+                        <input class="form-control lecturesPerDay" type="number" min="0" max="10" value="1">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <button class="btn btn-secondary btn-action" id="addLectureRow">➕ Add Lecture</button>
+            </div>
+
+            <hr>
+
+            <!-- 🧪 Practical Setup -->
+            <h5>🧪 Practical Setup</h5>
+            <div id="practicalRows">
+                <div class="row practical-row mb-2">
+                    <div class="col-sm-3">
+                        <input class="form-control practicalTeacher" placeholder="Teacher">
+                    </div>
+                    <div class="col-sm-3">
+                        <input class="form-control practicalSubject" placeholder="Practical Subject">
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-select practicalBatch">
+                            <option value="A">Batch A</option>
+                            <option value="B">Batch B</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <input class="form-control practicalPerDay" type="number" min="1" max="10" value="1">
+                    </div>
+                    <div class="col-sm-2 d-flex justify-content-center align-items-center">
+                        <button class="btn btn-outline-danger btn-sm removePractical">❌</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <button class="btn btn-secondary btn-action" id="addPracticalRow">➕ Add Practical</button>
+            </div>
+
+
+            <hr>
+
+            <!-- Action Buttons -->
+            <div class="mt-3 d-flex gap-2 flex-wrap">
+                <button class="btn btn-success btn-action" id="generateBtn">Generate Timetable</button>
+                <button class="btn btn-danger btn-action" id="clearBtn">Clear</button>
+                <button class="btn btn-primary btn-action" id="exportBtn">Export PDF</button>
+                <button class="btn btn-info btn-action text-white" id="exportImgBtn">Export Image</button>
+            </div>
+        </div>
+
+
+        <!-- Timetable Grid -->
+        <div class="panel" id="gridPanel">
+            <h5>📋 Timetable</h5>
+            <div id="timetableContainer" style="overflow:auto;">
+                <div id="timetableGrid" class="timetable-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const defaultSlots = [
+            { label: "09:00 - 10:00", recess: false },
+            { label: "10:00 - 11:00", recess: false },
+            { label: "11:00 - 12:00", recess: false },
+            { label: "12:00 - 12:30", recess: true },
+            { label: "01:00 - 02:00", recess: false },
+            { label: "02:00 - 03:00", recess: false },
+            { label: "03:00 - 04:00", recess: false }
+        ];
+
+        const days = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(days));
+        let timeSlots = [];
+        const timeListEl = document.getElementById('timeList');
+
+        function renderTimeRows() {
+            timeListEl.innerHTML = '';
+            timeSlots.forEach((t, idx) => {
+                const div = document.createElement('div');
+                div.className = 'time-row';
+                div.dataset.idx = idx;
+                div.innerHTML = `
+                            <input type="text" class="form-control me-1 timeLabel" value="${escapeHtml(t.label)}">
+                            <label class="form-check-label me-1"><input type="checkbox" class="form-check-input recessChk" ${t.recess ? 'checked' : ''}> Recess</label>
+                            <button class="btn btn-outline-secondary btn-sm editBtn">✏️</button>
+                            <button class="btn btn-outline-danger btn-sm removeBtn">🗑️</button>`;
+                div.querySelector('.removeBtn').addEventListener('click', () => { timeSlots.splice(idx, 1); renderTimeRows(); });
+                div.querySelector('.editBtn').addEventListener('click', () => {
+                    const lbl = div.querySelector('.timeLabel');
+                    lbl.disabled = !lbl.disabled;
+                    if (!lbl.disabled) lbl.focus();
+                });
+                div.querySelector('.timeLabel').addEventListener('input', (e) => { timeSlots[idx].label = e.target.value; });
+                div.querySelector('.recessChk').addEventListener('change', (e) => { timeSlots[idx].recess = e.target.checked; });
+                timeListEl.appendChild(div);
+            });
+        }
+
+        document.getElementById('addTimeBtn').addEventListener('click', () => { timeSlots.push({ label: 'New Slot', recess: false }); renderTimeRows(); });
+        document.getElementById('resetTimesBtn').addEventListener('click', () => { timeSlots = JSON.parse(JSON.stringify(defaultSlots)); renderTimeRows(); });
+        document.getElementById('applyGridBtn').addEventListener('click', () => buildGrid());
+
+        document.getElementById('addLectureRow').addEventListener('click', () => {
+            const r = document.createElement('div');
+            r.className = 'row teacher-row mb-2 align-items-center';
+            r.innerHTML = `
+                <div class="col-sm-5">
+                    <input class="form-control teacherName" placeholder="Teacher">
+                </div>
+                <div class="col-sm-5">
+                    <input class="form-control subject" placeholder="Subject">
+                </div>
+                <div class="col-sm-1">
+                    <input class="form-control lecturesPerDay" type="number" min="1" max="10" value="1" style="width: 100%;">
+                </div>
+                <div class="col-sm-1 text-center">
+                    <button type="button" class="btn btn-outline-danger btn-sm removeLecture">❌</button>
+                </div>`;
+
+            r.querySelector('.removeLecture').addEventListener('click', () => r.remove());
+            document.getElementById('teacherRows').appendChild(r);
+        });
+
+
+
+               document.getElementById('addPracticalRow').addEventListener('click', () => {
+            const r = document.createElement('div');
+            r.className = 'row practical-row mb-2';
+            r.innerHTML = `
+                <div class="col-sm-3"><input class="form-control practicalTeacher" placeholder="Teacher"></div>
+                <div class="col-sm-3"><input class="form-control practicalSubject" placeholder="Practical Subject"></div>
+                <div class="col-sm-2">
+                    <select class="form-select practicalBatch">
+                        <option value="A">Batch A</option>
+                        <option value="B">Batch B</option>
+                    </select>
+                </div>
+                <div class="col-sm-2"><input class="form-control practicalPerDay" type="number" min="1" max="10" value="1"></div>
+                <div class="col-sm-2 d-flex justify-content-center align-items-center">
+                    <button class="btn btn-outline-danger btn-sm removePractical">❌</button>
+                </div>`;
+            r.querySelector('.removePractical').addEventListener('click', () => r.remove());
+            document.getElementById('practicalRows').appendChild(r);
+        });
+
+
+
+        function buildGrid() {
+            const grid = document.getElementById('timetableGrid');
+            grid.innerHTML = '';
+            const colCount = 1 + days.length;
+            grid.style.gridTemplateColumns = `120px ` + days.map(_ => '1fr').join(' ');
+            const headerTime = document.createElement('div');
+            headerTime.className = 'headerCell';
+            headerTime.innerText = 'Time';
+            grid.appendChild(headerTime);
+            for (const d of days) {
+                const dh = document.createElement('div');
+                dh.className = 'headerCell';
+                dh.innerText = d;
+                grid.appendChild(dh);
+            }
+            timeSlots.forEach((slot, rIdx) => {
+                if (slot.recess) {
+                    const tCell = document.createElement('div');
+                    tCell.className = 'timeCell recessCell';
+                    tCell.innerText = slot.label;
+                    grid.appendChild(tCell);
+                    for (let i = 0; i < days.length; i++) {
+                        const rc = document.createElement('div');
+                        rc.className = 'recessCell';
+                        rc.innerText = 'Break';
+                        grid.appendChild(rc);
+                    }
+                } else {
+                    const tCell = document.createElement('div');
+                    tCell.className = 'timeCell';
+                    tCell.innerText = slot.label;
+                    grid.appendChild(tCell);
+                    for (const d of days) {
+                        const c = document.createElement('div');
+                        c.className = 'cell timetable-cell';
+                        c.dataset.day = d;
+                        c.dataset.timeIndex = rIdx;
+                        c.innerText = '-';
+                        grid.appendChild(c);
+                    }
+                }
+            });
+        }
+
+        function escapeHtml(s) { return (s + '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;'); }
+        function shuffle(a) { return a.sort(() => Math.random() - 0.5); }
+        function clearGridCells() { document.querySelectorAll('.timetable-cell').forEach(c => { c.innerHTML = '-'; c.style.backgroundColor = '#fff'; c.classList.remove('practical-slot'); }); }
+
+        function gatherLectures() {
+            const rows = Array.from(document.querySelectorAll('.teacher-row'));
+            const lectures = [];
+            rows.forEach(r => {
+                const teacher = r.querySelector('.teacherName').value.trim();
+                const subject = r.querySelector('.subject').value.trim();
+                const count = parseInt(r.querySelector('.lecturesPerDay').value || '0', 10);
+                if (!teacher || !subject || count <= 0) return;
+                for (let i = 0; i < count; i++) lectures.push({ teacher, subject, type: 'lecture' });
+            });
+            return lectures;
+        }
+
+        function gatherPracticals() {
+            const rows = Array.from(document.querySelectorAll('.practical-row'));
+            const practicals = [];
+            rows.forEach(r => {
+                const teacher = r.querySelector('.practicalTeacher').value.trim();
+                const subject = r.querySelector('.practicalSubject').value.trim();
+                const batch = r.querySelector('.practicalBatch')?.value || ''; // ✅ new line
+                const count = parseInt(r.querySelector('.practicalPerDay').value || '0', 10);
+                if (!teacher || !subject || count <= 0) return;
+                for (let i = 0; i < count; i++) practicals.push({ teacher, subject,batch, type: 'practical' });
+            });
+            return practicals;
+        }
+
+               function allocateDaywise(lectures, practicals) {
+            const dayCells = {};
+            document.querySelectorAll('.timetable-cell').forEach(c => {
+                const d = c.dataset.day;
+                if (!dayCells[d]) dayCells[d] = [];
+                dayCells[d].push(c);
+            });
+
+            for (const d of Object.keys(dayCells)) {
+                const cells = dayCells[d].filter(c => c.innerHTML === '-');
+                if (cells.length === 0) continue;
+
+                // Split day into halves
+                const half = Math.floor(cells.length / 2);
+                const lectureCells = shuffle(cells.slice(0, half)); // 1st half - lectures
+                const practicalCells = cells.slice(half); // 2nd half - practicals (continuous slots allowed)
+
+                const lecList = shuffle([...lectures]);
+                const pracList = shuffle([...practicals]);
+
+                // --- Fill Lectures (1st Half) ---
+                for (let i = 0; i < lectureCells.length && i < lecList.length; i++) {
+                    const item = lecList[i];
+                    lectureCells[i].innerHTML = `
+                        <strong>${escapeHtml(item.subject)}</strong>
+                        <span>${escapeHtml(item.teacher)}</span>`;
+                    lectureCells[i].style.backgroundColor = colorFor(item.subject);
+                    lectureCells[i].style.border = "1px solid #d0d0d0";
+                }
+
+                       // --- Fill Practicals (2nd Half) - shuffle each time and show Batch A & B together ---
+        let idx = 0;
+        while (idx < practicalCells.length) {
+            const start = idx;
+            const end = Math.min(idx + 3, practicalCells.length);
+
+            // Shuffle practicals every block so each generation changes
+            const shuffledPracticals = shuffle([...pracList]);
+
+            // Pick one practical for each batch (if available)
+            const batchA = shuffledPracticals.find(p => p.batch === 'A');
+            const batchB = shuffledPracticals.find(p => p.batch === 'B');
+
+            for (let i = start; i < end; i++) {
+                const c = practicalCells[i];
+
+                let lineA = batchA
+                    ? `${escapeHtml(batchA.subject)} (Batch A) - ${escapeHtml(batchA.teacher)}`
+                    : '';
+                let lineB = batchB
+                    ? `${escapeHtml(batchB.subject)} (Batch B) - ${escapeHtml(batchB.teacher)}`
+                    : '';
+
+                c.innerHTML = `
+                    <strong>${lineA}${lineA && lineB ? '<br>' : ''}${lineB}</strong>
+                `;
+                c.classList.add('practical-slot');
+                c.style.backgroundColor = '#ede7f6';
+                c.style.border = "2px dashed #673ab7";
+            }
+
+            idx = end; // move to next 3-hour block
+        }
+
+            }
+        }
+
+
+
+        function colorFor(subject) {
+            const colors = ['#e3f2fd', '#fce4ec', '#fff3e0', '#e8f5e9', '#ede7f6', '#f3e5f5'];
+            let hash = 0; for (let i = 0; i < subject.length; i++) hash = subject.charCodeAt(i) + ((hash << 5) - hash);
+            return colors[Math.abs(hash) % colors.length];
+        }
+
+                document.getElementById('generateBtn').addEventListener('click', () => {
+            clearGridCells();
+            const lectures = gatherLectures();
+            const practicals = gatherPracticals();
+            const totalLec = lectures.length;
+            const totalPrac = practicals.length;
+
+            // Lecture validation
+            if (totalLec < 3) {
+                alert("⚠️ Please add at least 3 lecture periods.");
+                return;
+            }
+
+            // Practical validation
+            const batchA = practicals.filter(p => p.batch === 'A').length;
+            const batchB = practicals.filter(p => p.batch === 'B').length;
+
+            if (batchA === 0 && batchB === 0) {
+                alert("⚠️ Please add at least 2 practical periods.");
+                return;
+            } else if (batchA === 0) {
+                alert("⚠️ Please add at least one practical for Batch A.");
+                return;
+            } else if (batchB === 0) {
+                alert("⚠️ Please add at least one practical for Batch B.");
+                return;
+            }
+
+            // If all okay, generate timetable
+            allocateDaywise(lectures, practicals);
+        });
+
+
+        document.getElementById('clearBtn').addEventListener('click', () => clearGridCells());
+
+        document.getElementById('exportBtn').addEventListener('click', async () => {
+            const { jsPDF } = window.jspdf;
+            const el = document.getElementById('timetableGrid');
+            const canvas = await html2canvas(el, { scale: 2 });
+            const img = canvas.toDataURL('image/png');
+            const pdf = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+            const w = pdf.internal.pageSize.getWidth();
+            const h = (canvas.height * w) / canvas.width;
+            pdf.addImage(img, 'PNG', 0, 0, w, h);
+            pdf.save('timetable.pdf');
+        });
+
+        document.getElementById('exportImgBtn').addEventListener('click', async () => {
+            const el = document.getElementById('timetableGrid');
+            const canvas = await html2canvas(el, { scale: 2 });
+            const link = document.createElement('a');
+            link.download = 'timetable.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+
+        timeSlots = JSON.parse(JSON.stringify(defaultSlots));
+        renderTimeRows();
+        buildGrid();
+    </script>
+</body>
+</html>
